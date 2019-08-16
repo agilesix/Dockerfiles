@@ -4,6 +4,7 @@ ARG RUBY_PATH=/usr/local
 ARG RUBY_VERSION=2.6.3
 
 RUN yum install -y \
+        gcc-c++ \
         wget \
         git \
         libreadline-dev \
@@ -25,7 +26,11 @@ RUN yum install -y \
         mysql-devel \
         redis \
         sqlite-devel \
-        readline-devel
+        readline-devel \
+        postgresql-server \
+        postgresql-contrib 
+        
+RUN yum install -y libpqxx-devel
 
 RUN git clone git://github.com/rbenv/ruby-build.git $RUBY_PATH/plugins/ruby-build \
 &&  $RUBY_PATH/plugins/ruby-build/install.sh
