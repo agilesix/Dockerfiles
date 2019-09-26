@@ -54,7 +54,7 @@ RUN ruby-build $RUBY_VERSION $RUBY_PATH/
 RUN gem update --system
 
 # install latest ImageMagick
-RUN yum install -y libpng-devel libjpeg-devel libtool-ltdl-devel fftw3-devel djvulibre-devel 
+RUN yum install -y libpng-devel libjpeg-devel libtool-ltdl-devel fftw3-devel djvulibre-devel libltdl-dev file-devel
 RUN wget https://www.imagemagick.org/download/ImageMagick.tar.gz \
         && tar xvzf ImageMagick.tar.gz \
         && cd ImageMagick-7.* \
