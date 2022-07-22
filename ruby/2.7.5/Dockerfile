@@ -16,7 +16,7 @@ ARG RUBY_VERSION=2.7.5
 ARG NODE_MAJOR_VERSION=16
 
 RUN yum install -y vim-X11 vim-common vim-enhanced vim-minimal
-
+RUN yum install -y centos-release-scl-rh
 RUN yum install -y \
         gcc-c++ \
         wget \
@@ -40,10 +40,11 @@ RUN yum install -y \
         mysql-devel \
         redis \
         sqlite-devel \
-        readline-devel \
-        postgresql-server \
-        postgresql-contrib \
-        postgresql-devel
+        readline-devel
+
+RUN yum install -y https://download.postgresql.org/pub/repos/yum/reporpms/EL-7-x86_64/pgdg-redhat-repo-latest.noarch.rpm
+RUN yum install -y postgresql-server12 postgresql-contrib12 postgresql-devel12
+
 
 RUN git clone https://github.com/rbenv/ruby-build.git $RUBY_PATH/plugins/ruby-build \
 &&  $RUBY_PATH/plugins/ruby-build/install.sh
