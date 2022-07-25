@@ -42,6 +42,8 @@ RUN yum install -y \
         redis \
         sqlite-devel \
         readline-devel
+# Due to this Dockerfile being utilized within the VAEC, we needed to add the VA root Certificate Authority (CA)
+# to the trusted certs and then update them - lines 47-49
 COPY VA-Internal-S2-RCA1-v1.cer /etc/pki/ca-trust/source/anchors/VA-Internal-S2-RCA1-v1.cer
 RUN yum --disablerepo=epel -y update ca-certificates
 RUN update-ca-trust extract
