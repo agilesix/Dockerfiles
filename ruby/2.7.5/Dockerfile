@@ -15,6 +15,7 @@ ARG RUBY_PATH=/usr/local
 ARG RUBY_VERSION=2.7.5
 ARG NODE_MAJOR_VERSION=16
 
+RUN yum install -y yum-plugin-ovl
 RUN yum install -y vim-X11 vim-common vim-enhanced vim-minimal
 RUN yum install -y centos-release-scl-rh
 RUN yum install -y \
@@ -41,9 +42,13 @@ RUN yum install -y \
         redis \
         sqlite-devel \
         readline-devel
-
-RUN yum install -y https://download.postgresql.org/pub/repos/yum/reporpms/EL-7-x86_64/pgdg-redhat-repo-latest.noarch.rpm
-RUN yum install -y postgresql-server12 postgresql-contrib12 postgresql-devel12
+COPY VA-Internal-S2-RCA1-v1.cer /etc/pki/ca-trust/source/anchors/VA-Internal-S2-RCA1-v1.cer
+RUN yum --disablerepo=epel -y update ca-certificates
+RUN update-ca-trust extract
+RUN wget https://download.postgresql.org/pub/repos/yum/reporpms/EL-7-x86_64/pgdg-redhat-repo-latest.noarch.rpm
+RUN yum install -y pgdg-redhat-repo-latest.noarch.rpm
+RUN yum install -y readline-devel posgtgresql-server postgresql-contrib postgresql-devel
+RUN yum install -y postgresql12-server postgresql12-contrib postgresql12-devel
 
 
 RUN git clone https://github.com/rbenv/ruby-build.git $RUBY_PATH/plugins/ruby-build \
@@ -62,9 +67,8 @@ RUN curl -fsSL https://rpm.nodesource.com/setup_${NODE_MAJOR_VERSION}}.x | bash 
 
 # # install latest ImageMagick
 RUN yum install -y libpng-devel libjpeg-devel libtool-ltdl-devel fftw3-devel djvulibre-devel libltdl-dev file-devel
-RUN wget https://www.imagemagick.org/download/ImageMagick.tar.gz \
-        && tar xvzf ImageMagick.tar.gz \
-        && cd ImageMagick-7.* \
+RUN git clone https://github.com/ImageMagick/ImageMagick.git ImageMagick \
+        && cd ImageMagick \
         && ./configure \
         && make \
         && make install \
