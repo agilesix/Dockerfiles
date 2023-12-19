@@ -52,6 +52,7 @@ RUN  apt-get update \
 
 #install latest ImageMagick
 RUN apt update && apt install -y libpng-dev libjpeg-dev libltdl-dev libfftw3-dev libdjvulibre-dev file pkg-config
+RUN pkg-config --c-flags libpng
 RUN git clone https://github.com/ImageMagick/ImageMagick.git ImageMagick \
         && cd ImageMagick \
         && ./configure --with-png=yes \
