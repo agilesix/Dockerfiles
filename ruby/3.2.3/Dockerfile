@@ -28,13 +28,13 @@ RUN apt-get update && \
 RUN bash install-certs.sh
 
 
-#install Postgresql 12
+#install Postgresql 13
 RUN apt-get install -y lsb-release
 RUN echo "deb https://apt.postgresql.org/pub/repos/apt $(lsb_release -cs)-pgdg main" > /etc/apt/sources.list.d/pgdg.list
 RUN apt-get install sudo
 RUN wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo apt-key add -
 RUN apt-get update
-RUN sudo apt-get install -y  postgresql-12
+RUN sudo apt-get install -y  postgresql-13
 
 RUN gem update --system
 
