@@ -1,5 +1,5 @@
 ARG RELEASE=bullseye
-FROM ruby:3.3.6-slim-${RELEASE} as rubyimg
+FROM ruby:3.2.5-slim-${RELEASE} as rubyimg
 
 # Install necessary packages and clean up
 RUN apt-get update &&  \
