@@ -1,5 +1,5 @@
 ARG RELEASE=bullseye
-FROM ruby:3.3.6-slim-${RELEASE} as rubyimg
+FROM ruby:3.2.5-slim-${RELEASE} as rubyimg
 
 # Install necessary packages and clean up
 RUN apt-get update &&  \
@@ -13,13 +13,13 @@ RUN apt-get update &&  \
 COPY install-certs.sh .
 RUN bash install-certs.sh && update-ca-certificates
 
-# Install PostgreSQL 13
+# Install PostgreSQL 12
 RUN apt-get update && \
     apt-get install -y lsb-release && \
     echo "deb https://apt.postgresql.org/pub/repos/apt $(lsb_release -cs)-pgdg main" > /etc/apt/sources.list.d/pgdg.list && \
     apt-get install -y postgresql-common && \
     yes '' | /usr/share/postgresql-common/pgdg/apt.postgresql.org.sh && \
-    apt-get install -y postgresql-13
+    apt-get install -y postgresql-12
 
 # Install Node.js using the NodeSource setup script
 ARG NODE_MAJOR_VERSION=22
